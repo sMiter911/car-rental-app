@@ -1,0 +1,26 @@
+<div class="hero">
+  <div class="row">
+    <div class="left-sec">
+      <div class="content">
+        <h2><span>Available </span><br>Rides<span>.</span></h2>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Id consectetur explicabo enim dolorem, dolor vero
+          qui suscipit rerum natus minus quaerat aperiam sapiente eos.
+        </p>
+      </div>
+    </div>
+    <div class="right-sec">
+      <div class="available_cars" *ngFor="let car of availableCars?.rows">
+        <div class="img-container">
+          <img
+            src="{{car.vehicle_pic}}"
+            alt="">
+        </div>
+        <div class="vehicle-details">
+          <a>Vehicle Manufacturer: {{car.manufacturer}}</a>
+          <p>Vehicle Name: {{car.vehicle_name}}</p>
+          <p>Vehicle Registered: {{car.vehicle_reg}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
