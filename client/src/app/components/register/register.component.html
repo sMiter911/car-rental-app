@@ -1,0 +1,58 @@
+<div class="container">
+  <div id="register">
+    <div id="card">
+      <img src="../../../assets/book-it-logo.jpg" height="50px;"
+        style="display: block; margin-left: auto; margin-right: auto; width: 50%" />
+      <h1 class="mat-display-1" style="margin-bottom: 20px;margin-top:20px;text-align: center;">Register</h1>
+      <p style="margin-bottom: 20px;margin-top:20px;text-align: center;">Create email and password</p>
+      <form [formGroup]="form">
+        <div>
+          <span class="mat-body-1 headings">Email</span>
+          <input type="email" required formControlName="email" [ngClass]="{
+              'is-invalid':
+                (isFormSubmitted && form.controls.email.errors) ||
+                (!form.controls.email.pristine &&
+                  form.controls.email.invalid)
+            }" />
+          <!-- Validation messages -->
+          <div class="invalid-feedback" *ngIf="
+              (isFormSubmitted && form.controls.email.errors) ||
+              (!form.controls.email.pristine &&
+                form.controls.email.invalid)
+            ">
+            <div *ngIf="form.controls.email.errors.required">
+              Email is required
+            </div>
+            <div *ngIf="form.controls.email.errors.pattern">
+              Enter valid email
+            </div>
+          </div>
+        </div>
+        <div>
+          <span class="mat-body-1 headings">Password</span>
+          <input type="password" required formControlName="password" [ngClass]="{
+              'is-invalid':
+                (isFormSubmitted && form.controls.password.errors) ||
+                (!form.controls.password.pristine &&
+                  form.controls.password.invalid)
+            }" />
+          <div class="invalid-feedback" *ngIf="
+              (isFormSubmitted && form.controls.password.errors) ||
+              (!form.controls.password.pristine &&
+                form.controls.password.invalid)
+            ">
+            <div *ngIf="form.controls.password.errors.required">
+              Password is required
+            </div>
+            <div *ngIf="form.controls.password.errors.minlength">
+              Minimum 8 characters required
+            </div>
+          </div>
+        </div>
+        <a (click)="submit()" class="btn">Register</a>
+        <a style="text-align: center; text-decoration:none" [routerLink]="['/login']">Login</a>
+      </form>
+    </div>
+  </div>
+
+</div>

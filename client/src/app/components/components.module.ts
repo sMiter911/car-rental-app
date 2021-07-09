@@ -5,10 +5,20 @@ import { HomeComponent } from './home/home.component';
 import { CarsComponent } from './cars/cars.component';
 import { BookingsComponent } from './bookings/bookings.component';
 import { AppRoutingModule } from '../app-routing.module';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [HomeComponent, NavbarComponent, CarsComponent, BookingsComponent],
-  imports: [CommonModule, AppRoutingModule],
-  exports: [NavbarComponent]
+  declarations: [
+    HomeComponent,
+    NavbarComponent,
+    CarsComponent,
+    BookingsComponent,
+    LoginComponent,
+    RegisterComponent,
+  ],
+  imports: [CommonModule, AppRoutingModule, FormsModule, ReactiveFormsModule],
+  exports: [NavbarComponent],
 })
 export class ComponentsModule {}
