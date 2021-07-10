@@ -38,7 +38,7 @@
   color: #fff;
   font-size: 25px;
   letter-spacing: 2px;
-  margin-right: 15px;
+	text-align: center;
   text-transform: capitalize;
   text-decoration: none;
 }
@@ -48,13 +48,13 @@
   font-size: 45px;
 }
 
+.table-container table {
+	margin: auto;
+}
 
 .container {
 	padding-top: 100px;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
+	margin: auto;
 }
 
 table {

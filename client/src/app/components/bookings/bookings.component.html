@@ -2,33 +2,35 @@
   <div class="desc-text">
     <p>Current Bookings<span>.</span></p>
   </div>
-  <div class="container">
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Surname</th>
-          <th>Email</th>
-          <th>Vehicle</th>
-          <th>Booked On</th>
-          <th>Reserve Date</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let booking of bookings?.rows">
-          <td>{{booking.name}}</td>
-          <td>{{booking.surname}}</td>
-          <td>{{booking.email}}</td>
-          <td>{{booking.manufacturer}} {{booking.vehicle_name}}</td>
-          <td>{{booking.created_at}}</td>
-          <td>{{booking.booking_date}}</td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="btn-container">
-      <button class="discover-btn">
-        <a [routerLink]="['/bookings']">Book</a>
-      </button>
+  <div class="table-container">
+    <div class="container">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Email</th>
+            <th>Vehicle</th>
+            <th>Booked On</th>
+            <th>Reserve Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let booking of bookings?.rows">
+            <td>{{booking.name}}</td>
+            <td>{{booking.surname}}</td>
+            <td>{{booking.email}}</td>
+            <td>{{booking.manufacturer}} {{booking.vehicle_name}}</td>
+            <td>{{booking.created_at}}</td>
+            <td>{{booking.booking_date}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="btn-container">
+        <button class="discover-btn">
+          <a [routerLink]="['/book']">Book</a>
+        </button>
+      </div>
     </div>
   </div>
 </div>

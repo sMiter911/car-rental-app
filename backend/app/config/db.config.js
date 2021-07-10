@@ -33,6 +33,23 @@ let db = new sqlite3.Database(DB_SOURCE, sqlite3.OPEN_READWRITE | sqlite3.OPEN_C
       }
 
     });
+    db.run(`CREATE TABLE available_cars (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      manufacturer NVARCHAR(20),
+      vehicle_name NVARCHAR(20),
+      vehicle_reg NVARCHAR(20),
+      vehicle_pic NVARCHAR(250)
+        )`,
+          (err) => {
+            if (err) {
+              console.log('available_cars table already exists')
+            } else {
+              var insert = 'INSERT INTO available_cars (manufacturer, vehicle_name, vehicle_reg,vehicle_pic) VALUES (?,?,?,?)'
+              db.run(insert, ["BMW", "8 Series", "2021", "https://smartcdn.prod.postmedia.digital/driving/wp-content/uploads/2021/05/chrome-image-414927.png"])
+          db.run(insert, ["BMW", "M4 Coupe", "2021", "https://autocanadaprod-com.cdn-convertus.com/uploads/sites/86/2021/02/BMW-M4-Competition-Coupe_v2.png"])
+          db.run(insert, ["BMW", "M2 Coupe", "2021", "https://images.carprices.com/pricebooks_data/usa/colorized/2021/BMW/View2/M2_Competition_Coupe/3.0L/212S_C33.png"])
+            }
+          }); 
     db.run(`CREATE TABLE appusers (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name text, 

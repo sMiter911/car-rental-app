@@ -1,0 +1,91 @@
+<div class="hero">
+  <div class="container">
+    <form [formGroup]="bookingForm">
+      <ul class="flex-outer">
+        <li>
+          <label for="first-name">First Name</label>
+          <input required type="text" id="name" placeholder="Enter your first name here"
+            formControlName="name">
+        </li>
+        <li>
+          <label for="surname">Last Name</label>
+          <input required type="text" id="surname" placeholder="Enter your surname here"
+            formControlName="surname">
+        </li>
+        <li>
+          <label for="id">ID</label>
+          <input required type="text" id="id" placeholder="Enter your ID here" formControlName="idNum" pattern="\d*"
+            maxlength="13" minlength="13">
+        </li>
+        <li>
+          <label for="email">Email</label>
+          <input type="email" required formControlName="email" placeholder="Enter your email here" [ngClass]="{
+            'is-invalid':
+              (isFormSubmitted && bookingForm.controls.email.errors) ||
+              (!bookingForm.controls.email.pristine &&
+                bookingForm.controls.email.invalid)
+          }" />
+          <!-- Validation messages -->
+          <div class="invalid-feedback" *ngIf="
+          (isFormSubmitted && bookingForm.controls.email.errors) ||
+          (!bookingForm.controls.email.pristine &&
+            bookingForm.controls.email.invalid)
+        ">
+            <div *ngIf="bookingForm.controls.email.errors.required">
+              Email is required
+            </div>
+            <div *ngIf="bookingForm.controls.email.errors.pattern">
+              Enter valid email
+            </div>
+          </div>
+        </li>
+        <li>
+          <label for="phone">Phone</label>
+          <input required type="tel" id="phone" placeholder="Enter your phone here" formControlName="phone">
+        </li>
+        <li>
+          <label for="address1">Address 1:</label>
+          <input type="text" id="address1" placeholder="Enter your address here" formControlName="address1" />
+        </li>
+        <li>
+          <label for="address2">Address 2:</label>
+          <input type="text" id="address2" placeholder="Enter your address here" formControlName="address2" />
+        </li>
+        <li>
+          <label for="city">City</label>
+          <input type="text" id="city" placeholder="Enter your city here" formControlName="city" />
+        </li>
+        <li>
+          <label for="province">Province</label>
+          <input type="text" id="province" placeholder="Enter your province here" formControlName="province" />
+        </li>
+        <li>
+          <label for="country">Country</label>
+          <input type="text" id="country" placeholder="Enter your country here" formControlName="country" />
+        </li>
+        <li>
+          <label for="postal">Postal code</label>
+          <input type="text" id="postal" placeholder="Enter your postal code here" formControlName="postal_code" />
+        </li>
+        <li>
+          <label for="manufacturer">Manufacturer</label>
+          <input required type="text" id="manufacturer" placeholder="Enter manufacturer here"
+            formControlName="manufacturer" />
+        </li>
+        <li>
+          <label for="v">Vehicle Name</label>
+          <input required type="text" id="vehicle_name" placeholder="Enter vehicle name here"
+            formControlName="vehicle_name" />
+        </li>
+        <li>
+          <label for="booking_date">Booking Date</label>
+          <input required type="date" id="booking_date" placeholder="Enter booking date here"
+            formControlName="booking_date" />
+        </li>
+        <li>
+          <button type="submit" (click)=submit()>Submit</button>
+        </li>
+      </ul>
+    </form>
+  </div>
+</div>

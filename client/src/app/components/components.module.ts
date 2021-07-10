@@ -11,6 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from '../shared/helpers/jwt.interceptor';
 import { ErrorInterceptor } from '../shared/helpers/error.interceptor';
+import { BookingformComponent } from './bookingform/bookingform.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { ErrorInterceptor } from '../shared/helpers/error.interceptor';
     BookingsComponent,
     LoginComponent,
     RegisterComponent,
+    BookingformComponent,
   ],
   imports: [CommonModule, AppRoutingModule, FormsModule, ReactiveFormsModule],
   providers: [

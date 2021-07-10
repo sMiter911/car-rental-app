@@ -90,7 +90,7 @@ app.post('/register', (req, res, next) => {
   }
 
   var sql = 'INSERT INTO appusers (name, email, password) VALUES (?,?,?)'
-  var params = [data.name, data.email, data.password]
+  var params = [data.name, data.email, data.password] 
 
   db.run(sql, params, function (err, result) {
     if (err) {
@@ -98,13 +98,13 @@ app.post('/register', (req, res, next) => {
     }
     findUserByEmail(data.email, (err, user) => {
       if(err) {
-        res.status(400).json({ "error": err.message })
+        return res.status(400).send({ "error": err.message })
       }
       const expiresIn = 24 * 60 * 60;
       const accessToken = jwt.sign({ id: user.id }, secret, {
         expiresIn: expiresIn
       });
-      res.json({
+      res.status(200).send({
         "status": "success",
         "data": data,
         "access_token": accessToken,
