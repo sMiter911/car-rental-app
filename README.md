@@ -68,4 +68,4 @@ ng serve
 ```
 ## Workflow Example
 
-![Workflow.](./BMW Technical assessment plan.svg )
+![Workflow.](workflow.png)
