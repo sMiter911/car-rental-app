@@ -7,7 +7,8 @@
       <ul>
         <li><a [routerLink]="['/cars']">Cars</a></li>
         <li><a [routerLink]="['/bookings']">Bookings</a></li>
-        <li><a [routerLink]="['/login']">Login</a></li>
+        <li *ngIf="!currentUser"><a [routerLink]="['/login']">Login</a></li>
+        <li *ngIf="currentUser"><a [routerLink]="['/logout']" (click)="logout()">Logout</a></li>
       </ul>
     </div>
     <div class="social-media">
