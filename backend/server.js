@@ -63,13 +63,25 @@ app.get('/bookings', (req, res, next) => {
     }
     res.status(200).json({ rows })
   });
+}); 
+//  Get bookings by ID
+app.post('/booking', (req, res, next) => {
+  var reqBody = req.body;
+  var sql = `SELECT * FROM bookings WHERE bookings.clientid = ${reqBody.clientID}`
+  db.all(sql, [], (err, rows) => {
+    if (err) {
+      res.status(400).json({ "error": err.message })
+      return;
+    }
+    res.status(200).json({ rows })
+  });
 });
 
 // POST a booking
 app.post('/book', (req, res, next) => {
   var reqBody = req.body;
-  db.run(`INSERT INTO bookings (idNum, name, surname, email, address1, address2, city, province, country, postal, manufacturer, vehicle_name, booking_date) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)`,
-    [reqBody.idNum, reqBody.name, reqBody.surname, reqBody.email, reqBody.address1, reqBody.address2, reqBody.city, reqBody.province, reqBody.country, reqBody.postal, reqBody.manufacturer, reqBody.vehicle_name, reqBody.booking_date],
+  db.run(`INSERT INTO bookings (idNum, clientID, name, surname, email, phone, address1, address2, city, province, country, postal_code, manufacturer, vehicle_name, booking_date) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
+    [reqBody.idNum, reqBody.clientID, reqBody.name, reqBody.surname, reqBody.email, reqBody.phone, reqBody.address1, reqBody.address2, reqBody.city, reqBody.province, reqBody.country, reqBody.postal_code, reqBody.manufacturer, reqBody.vehicle_name, reqBody.booking_date],
     function (err, result) {
       if (err) {
         res.status(400).json({ "error": err.message })
@@ -83,7 +95,7 @@ app.post('/book', (req, res, next) => {
         from: 'auto@bookiit.com',
         to: reqBody.email,
         subject: 'Test mail',
-        text: `Your test drive has been booked for the ${reqBody.email}. Your vehicle is the ${reqBody.manufacturer} ${reqBody.vehicle_name}`
+        text: `Your test drive has been booked for ${reqBody.booking_date}. Your vehicle is the ${reqBody.manufacturer} ${reqBody.vehicle_name}`
       };
 
       mailTransporter.sendMail(mailDetails, function (err, data) {
@@ -95,6 +107,16 @@ app.post('/book', (req, res, next) => {
       });
     });
 });
+
+// PATCH a booking
+
+
+
+
+
+
+
+
 
 /* The following routes are for auth purposes 🔒 */
 // Login and register routes

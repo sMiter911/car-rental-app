@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs/operators';
+import { User } from 'src/app/shared/models/user.model';
+import { AuthenticationService } from 'src/app/shared/services/authentication/authentication.service';
 import { BookingService } from 'src/app/shared/services/booking/booking.service';
 
 @Component({
@@ -14,14 +16,17 @@ export class BookingformComponent implements OnInit {
   isFormSubmitted: boolean = false;
   error = '';
   loading = false;
+  currentUser: User;
 
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private bookingService: BookingService,
+    private authService: AuthenticationService
   ) {}
 
   ngOnInit(): void {
+    this.authService.currentUser.subscribe((x) => (this.currentUser = x));
     this.reactiveForm();
   }
 
@@ -61,7 +66,14 @@ export class BookingformComponent implements OnInit {
       alert('Invalid form fields');
     } else {
       if (this.validateID() == true) {
-        this.bookingService.bookTestDrive(this.bookingForm.value)
+        const clientID = {
+          clientID: this.currentUser.user.id
+        }
+        const tempForm = {
+          ...this.bookingForm.value,
+          ...clientID
+        }
+        this.bookingService.bookTestDrive(tempForm)
         .pipe(first())
         .subscribe(
           (response) => console.log(response),
@@ -69,7 +81,7 @@ export class BookingformComponent implements OnInit {
         );
         this.bookingForm.reset();
         this.router.navigate(['/bookings']);
-        console.log('Booking Payload: ', this.bookingForm.value);
+        console.log('Booking Payload: ', tempForm);
       }
     }
   }

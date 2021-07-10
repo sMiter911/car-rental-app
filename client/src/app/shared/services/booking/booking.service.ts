@@ -48,6 +48,15 @@ export class BookingService {
     );
   }
 
+  getClientBookings(clientID): Observable<Bookings> {
+    const URL = `${environment.apiUrl}/booking`;
+    return this.http.post<Bookings>(URL, clientID)
+    .pipe(
+      retry(2),
+      catchError(this.handleError)
+    );
+  }
+
   bookTestDrive(booking): Observable<Bookings> {
     const URL = `${environment.apiUrl}/book`;
     return this.http.post<Bookings>(URL, booking)

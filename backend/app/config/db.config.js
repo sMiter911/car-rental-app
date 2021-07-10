@@ -11,15 +11,17 @@ let db = new sqlite3.Database(DB_SOURCE, sqlite3.OPEN_READWRITE | sqlite3.OPEN_C
     db.run('CREATE TABLE bookings ( \
       id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, \
       idNum NVARCHAR(13), \
+      clientID INTEGER, \
       name NVARCHAR(20), \
       surname NVARCHAR(20), \
       email NVARCHAR(20), \
+      phone NVARCHAR(20), \
       address1 NVARCHAR(20), \
       address2 NVARCHAR(20), \
       city NVARCHAR(20), \
       province NVARCHAR(20), \
       country NVARCHAR(20), \
-      postal NVARCHAR(20), \
+      postal_code NVARCHAR(20), \
       manufacturer NVARCHAR(20), \
       vehicle_name NVARCHAR(20), \
       booking_date DATETIME, \
@@ -28,8 +30,8 @@ let db = new sqlite3.Database(DB_SOURCE, sqlite3.OPEN_READWRITE | sqlite3.OPEN_C
       if (err) {
         console.log('bookings table already exists')
       } else {
-        let sql = 'INSERT INTO bookings (idNum, name, surname, email, address1, address2, city, province, country, postal, manufacturer, vehicle_name, booking_date, created_at) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
-        db.run(sql, ['1234567890123', 'John', 'Doe', 'john@gmail.com', '123 avenue', 'Melville', 'Johannesburg', 'Gauteng', 'South Africa', '2092', 'BMW', '3 Series', '2021/07/09', '2021/07/09'])
+        let sql = 'INSERT INTO bookings (idNum, clientID, name, surname, email, phone, address1, address2, city, province, country, postal_code, manufacturer, vehicle_name, booking_date, created_at) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
+        db.run(sql, ['1234567890123', 1, 'John', 'Doe', 'john@gmail.com', '555 555 55555', '123 avenue', 'Melville', 'Johannesburg', 'Gauteng', 'South Africa', '2092', 'BMW', '3 Series', '2021/07/09', '2021/07/09'])
       }
 
     });
