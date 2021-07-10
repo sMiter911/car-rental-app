@@ -4,13 +4,25 @@ const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const db = require("./app/config/db.config");
+const nodemailer = require('nodemailer');
 
 const app = express();
 // Will move to .env file
 const secret = "secretkey23456";
 var corsOption = {
   origin: 'http://localhost:5000'
-}; 
+};
+
+
+// Nodemailer setup
+let mailTransporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'safuelandpetroleum@gmail.com',
+    pass: 'Petroleum_Logistics2021'
+  }
+});
+
 
 // Middleware
 app.use(cors(corsOption))
@@ -66,6 +78,21 @@ app.post('/book', (req, res, next) => {
       res.status(201).json({
         "id": this.lastId
       })
+      // nodemailer sending
+      let mailDetails = {
+        from: 'auto@bookiit.com',
+        to: reqBody.email,
+        subject: 'Test mail',
+        text: `Your test drive has been booked for the ${reqBody.email}. Your vehicle is the ${reqBody.manufacturer} ${reqBody.vehicle_name}`
+      };
+
+      mailTransporter.sendMail(mailDetails, function (err, data) {
+        if (err) {
+          console.log('Error Occurs');
+        } else {
+          console.log('Email sent successfully');
+        }
+      });
     });
 });
 
@@ -90,14 +117,14 @@ app.post('/register', (req, res, next) => {
   }
 
   var sql = 'INSERT INTO appusers (name, email, password) VALUES (?,?,?)'
-  var params = [data.name, data.email, data.password] 
+  var params = [data.name, data.email, data.password]
 
   db.run(sql, params, function (err, result) {
     if (err) {
       res.status(400).json({ "error": err.message })
     }
     findUserByEmail(data.email, (err, user) => {
-      if(err) {
+      if (err) {
         return res.status(400).send({ "error": err.message })
       }
       const expiresIn = 24 * 60 * 60;
@@ -112,29 +139,29 @@ app.post('/register', (req, res, next) => {
       })
     })
   });
-}); 
+});
 
 app.post('/login', (req, res) => {
-  const  email  =  req.body.email;
-  const  password  =  req.body.password;
-  findUserByEmail(email, (err, user)=>{
-      if (err) return  res.status(500).send('Server error!');
-      if (!user) return  res.status(404).send('User not found!');
-      const  result  =  bcrypt.compareSync(password, user.password);
-      if(!result) return  res.status(401).send('Password not valid!');
+  const email = req.body.email;
+  const password = req.body.password;
+  findUserByEmail(email, (err, user) => {
+    if (err) return res.status(500).send('Server error!');
+    if (!user) return res.status(404).send('User not found!');
+    const result = bcrypt.compareSync(password, user.password);
+    if (!result) return res.status(401).send('Password not valid!');
 
-      const  expiresIn  =  24  *  60  *  60;
-      const  accessToken  =  jwt.sign({ id:  user.id }, secret, {
-          expiresIn:  expiresIn
+    const expiresIn = 24 * 60 * 60;
+    const accessToken = jwt.sign({ id: user.id }, secret, {
+      expiresIn: expiresIn
+    });
+    res.status(200).send(
+      {
+        "user": {
+          ...user,
+          "access_token": accessToken,
+          "expires_in": expiresIn
+        },
       });
-      res.status(200).send(
-        { 
-          "user":  {
-            ...user,
-            "access_token":  accessToken, 
-            "expires_in":  expiresIn
-          }, 
-        });
   });
 });
 
