@@ -13,6 +13,7 @@ const routes: Routes = [
   {path: 'cars', component: CarsComponent},
   {path: 'bookings', component: BookingsComponent, canActivate: [AuthGuard]},
   {path: 'book', component: BookingformComponent, canActivate: [AuthGuard]},
+  {path: 'editbooking/:id', component: BookingformComponent, canActivate: [AuthGuard]},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
 

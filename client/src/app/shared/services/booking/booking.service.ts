@@ -49,8 +49,8 @@ export class BookingService {
   }
 
   getClientBookings(clientID): Observable<Bookings> {
-    const URL = `${environment.apiUrl}/booking`;
-    return this.http.post<Bookings>(URL, clientID)
+    const URL = `${environment.apiUrl}/booking/${clientID}`;
+    return this.http.get<Bookings>(URL)
     .pipe(
       retry(2),
       catchError(this.handleError)
@@ -60,6 +60,15 @@ export class BookingService {
   bookTestDrive(booking): Observable<Bookings> {
     const URL = `${environment.apiUrl}/book`;
     return this.http.post<Bookings>(URL, booking)
+    .pipe(
+      retry(2),
+      catchError(this.handleError)
+    );
+  }
+
+  updateBooking(booking, id): Observable<Bookings> {
+    const URL = `${environment.apiUrl}/book/${id}`;
+    return this.http.patch<Bookings>(URL, booking)
     .pipe(
       retry(2),
       catchError(this.handleError)

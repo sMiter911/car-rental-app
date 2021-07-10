@@ -1,10 +1,13 @@
 <div class="hero">
   <div class="desc-text">
     <p>Current Bookings<span>.</span></p>
+    <br>
+    <p *ngIf="dataTable">Hello, {{currentUser.user.name}}<span>.</span> These are your current bookings<span>.</span></p>
+    <p *ngIf="!dataTable">Hello, {{currentUser.user.name}}<span>.</span> You have no bookings<span>.</span></p>
   </div>
-  <div class="table-container">
+  <div class="table-container" >
     <div class="container">
-      <table>
+      <table *ngIf="dataTable">
         <thead>
           <tr>
             <th>Name</th>
@@ -16,7 +19,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let booking of bookings?.rows">
+          <tr *ngFor="let booking of bookings?.rows" (click)="editBookingDetails(booking.id)">
             <td>{{booking.name}}</td>
             <td>{{booking.surname}}</td>
             <td>{{booking.email}}</td>

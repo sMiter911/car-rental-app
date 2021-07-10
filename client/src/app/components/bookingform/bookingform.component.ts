@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { User } from 'src/app/shared/models/user.model';
 import { AuthenticationService } from 'src/app/shared/services/authentication/authentication.service';
@@ -11,23 +12,29 @@ import { BookingService } from 'src/app/shared/services/booking/booking.service'
   templateUrl: './bookingform.component.html',
   styleUrls: ['./bookingform.component.scss'],
 })
-export class BookingformComponent implements OnInit {
+export class BookingformComponent implements OnInit, OnDestroy {
   bookingForm: FormGroup;
   isFormSubmitted: boolean = false;
   error = '';
   loading = false;
   currentUser: User;
+  private routeSub: Subscription;
+  routeParams: ''
 
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private bookingService: BookingService,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.authService.currentUser.subscribe((x) => (this.currentUser = x));
     this.reactiveForm();
+    this.routeSub = this.route.params.subscribe(params => {
+      this.routeParams = params['id']
+    });
   }
 
   private reactiveForm(): void {
@@ -64,21 +71,43 @@ export class BookingformComponent implements OnInit {
     this.isFormSubmitted = true;
     if (this.bookingForm.status == 'INVALID') {
       alert('Invalid form fields');
+    }
+    if (this.router.url.includes('/editbooking/')) {
+      if (this.validateID() == true) {
+        const clientID = {
+          clientID: this.currentUser.user.id,
+        };
+        const tempForm = {
+          ...this.bookingForm.value,
+          ...clientID,
+        };
+        this.bookingService
+          .updateBooking(tempForm,this.routeParams)
+          .pipe(first())
+          .subscribe(
+            (response) => console.log(response),
+            (error) => console.log(error)
+          );
+        this.bookingForm.reset();
+        this.router.navigate(['/bookings']);
+        console.log('Booking Payload: ', tempForm);
+      }
     } else {
       if (this.validateID() == true) {
         const clientID = {
-          clientID: this.currentUser.user.id
-        }
+          clientID: this.currentUser.user.id,
+        };
         const tempForm = {
           ...this.bookingForm.value,
-          ...clientID
-        }
-        this.bookingService.bookTestDrive(tempForm)
-        .pipe(first())
-        .subscribe(
-          (response) => console.log(response),
-          (error) => console.log(error)
-        );
+          ...clientID,
+        };
+        this.bookingService
+          .bookTestDrive(tempForm)
+          .pipe(first())
+          .subscribe(
+            (response) => console.log(response),
+            (error) => console.log(error)
+          );
         this.bookingForm.reset();
         this.router.navigate(['/bookings']);
         console.log('Booking Payload: ', tempForm);
@@ -119,5 +148,9 @@ export class BookingformComponent implements OnInit {
       }
     }
     return '...';
+  }
+
+  ngOnDestroy() {
+    this.routeSub.unsubscribe();
   }
 }
