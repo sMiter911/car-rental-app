@@ -97,7 +97,7 @@ will check for correct South African ID input and other validation. Once the sub
 is sent as booking confirmation. The user is then taken to the bookings table where they will see their
 bookings. They are also able to update the bookings whereby another email will be sent to notify of update. The user may also delete a booking as well.
 
-#### \*NB the form checks for a valid South African ID, no API calls are just a script to check validity, the following IDs may be used to test INVALID: 8001015009287 and VALID: 8001015009087
+#### \*NB The form checks for a valid South African ID, no API calls are made just a script to check validity, the following IDs may be used to test INVALID: 8001015009287 and VALID: 8001015009087
 
 Below is a basic workflow representation of the application.
 
