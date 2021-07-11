@@ -71,6 +71,12 @@ export class LoginComponent implements OnInit {
           error: (error) => {
             this.error = error;
             this.loading = false;
+            if (this.error == 'Not Found') {
+              alert('User does not exist');
+            }
+            if (this.error == 'Unauthorized') {
+              alert('Please check your login details');
+            }
           },
         });
       console.log('Submit', this.userLoginForm.value);

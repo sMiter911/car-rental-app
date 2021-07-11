@@ -66,7 +66,9 @@ export class RegisterComponent implements OnInit {
           error: (error) => {
             this.error = error;
             this.loading = false;
+            if(this.error == "Bad Request"){
             alert('Email exists')
+            }
           },
         });
       console.log('Submit', this.form.value);
