@@ -21,7 +21,10 @@ exports.getBookings = async (req, res, next) => {
     });
 
   } catch (error) {
-
+    return res.status(500).json({
+      success: false,
+      error: `Server Error: ${error.message}`
+    })
   }
 }
 
@@ -40,7 +43,7 @@ exports.getBookingsByID = async (req, res, next) => {
   } catch (error) {
     return res.status(500).json({
       success: false,
-      error: 'Server Error'
+      error: `Server Error: ${error.message}`
     })
   }
 }
@@ -78,7 +81,7 @@ exports.postBooking = async (req, res, next) => {
   } catch (error) {
     return res.status(500).json({
       success: false,
-      error: 'Server Error'
+      error: `Server Error: ${error.message}`
     })
   }
 }
@@ -118,7 +121,7 @@ exports.updateBooking = async (req, res, next) => {
   } catch (error) {
     return res.status(500).json({
       success: false,
-      error: 'Server Error'
+      error: `Server Error: ${error.message}`
     })
   }
 }

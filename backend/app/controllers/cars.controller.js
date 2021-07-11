@@ -11,7 +11,7 @@ exports.getCars = async (req, res, next) => {
   } catch (error) {
     return res.status(500).json({
       success: false,
-      error: 'Server Error'
+      error: `Server Error: ${error.message}`
     })
   }
 }
