@@ -39,7 +39,7 @@ export class AuthenticationService {
 
   login(email: string, password: string) {
     return this.http
-      .post<any>(`${environment.apiUrl}/login`, { email, password })
+      .post<any>(`${environment.apiUrl}/auth/login`, { email, password })
       .pipe(
         map((user) => {
           // store user details and jwt token in local storage to keep user logged in between page refreshes
@@ -52,7 +52,7 @@ export class AuthenticationService {
 
   register(client) {
     return this.http
-      .post<any>(`${environment.apiUrl}/register`, client)
+      .post<any>(`${environment.apiUrl}/auth/register`, client)
       .pipe(retry(2), catchError(this.handleError));
   }
 
