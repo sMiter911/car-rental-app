@@ -48,6 +48,26 @@ exports.getBookingsByID = async (req, res, next) => {
   }
 }
 
+exports.deleteBooking = async (req, res, next) => {
+  try {
+    var reqBody = req.body;
+    const id = req.params
+    var sql = `DELETE FROM bookings WHERE bookings.id = ${id.id}`
+    db.all(sql, [], (err, rows) => {
+      if (err) {
+        res.status(400).json({ "error": err.message })
+        return;
+      }
+      return res.status(200).json({ "updated": this.changes })
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      error: `Server Error: ${error.message}`
+    })
+  }
+}
+
 exports.postBooking = async (req, res, next) => {
   try {
     var reqBody = req.body;

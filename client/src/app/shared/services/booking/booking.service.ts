@@ -74,4 +74,14 @@ export class BookingService {
       catchError(this.handleError)
     );
   }
+
+  deleteBooking(id){
+    const URL = `${environment.apiUrl}/book/${id}`;
+    return this.http.delete(URL)
+    .pipe(
+      retry(2),
+      catchError(this.handleError)
+    );
+  }
+
 }

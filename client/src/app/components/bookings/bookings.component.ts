@@ -14,6 +14,8 @@ export class BookingsComponent implements OnInit {
   bookings: Bookings;
   currentUser: User;
   dataTable: boolean = true;
+  status: string;
+  errorMessage: any;
 
   constructor(
     private _bookingsService: BookingService,
@@ -39,4 +41,18 @@ export class BookingsComponent implements OnInit {
   editBookingDetails(id: string): void {
     this.router.navigate(['editbooking', id])
   }
+
+  deleteBooking(id: string): void {
+    this._bookingsService.deleteBooking(id).subscribe({
+      next: data => {
+          this.status = 'Delete successful';
+          window.location.reload();
+      },
+      error: error => {
+          this.errorMessage = error.message;
+          console.error('There was an error!', error.message);
+      }
+  });
+  }
+  
 }

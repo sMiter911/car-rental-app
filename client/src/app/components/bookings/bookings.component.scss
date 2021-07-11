@@ -69,6 +69,16 @@ td {
 	padding: 15px;
 	background-color: rgba(255,255,255,0.2);
 	color: #fff;
+	cursor: pointer;
+}
+
+.edit-function {
+	background: green;
+	font-weight: 700;
+}
+.delete-function {
+	background: rgb(255, 0, 0);
+	font-weight: 700;
 }
 
 th {

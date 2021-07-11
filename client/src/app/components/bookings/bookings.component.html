@@ -3,7 +3,7 @@
     <p>Current Bookings<span>.</span></p>
     <br>
     <p *ngIf="dataTable">Hello, {{currentUser.user.name}}<span>.</span> These are your current bookings<span>.</span></p>
-    <p *ngIf="!dataTable">Hello, {{currentUser.user.name}}<span>.</span> You have no bookings<span>.</span></p>
+    <p *ngIf="!dataTable">Hello, {{currentUser.user.name}}<span>.</span> You currently have no bookings<span>.</span></p>
   </div>
   <div class="table-container" >
     <div class="container">
@@ -16,16 +16,20 @@
             <th>Vehicle</th>
             <th>Booked On</th>
             <th>Reserve Date</th>
+            <th>Edit</th>
+            <th>Delete</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let booking of bookings?.rows" (click)="editBookingDetails(booking.id)">
+          <tr *ngFor="let booking of bookings?.rows">
             <td>{{booking.name}}</td>
             <td>{{booking.surname}}</td>
             <td>{{booking.email}}</td>
             <td>{{booking.manufacturer}} {{booking.vehicle_name}}</td>
             <td>{{booking.created_at}}</td>
             <td>{{booking.booking_date}}</td>
+            <td (click)="editBookingDetails(booking.id)" class="edit-function">Edit Booking</td>
+            <td (click)="deleteBooking(booking.id)" class="delete-function">Delete Booking</td>
           </tr>
         </tbody>
       </table>

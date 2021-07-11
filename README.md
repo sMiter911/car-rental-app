@@ -51,6 +51,8 @@ npm install
 Run the server
 
 ```
+npm start
+or
 nodemon
 ```
 
@@ -58,17 +60,18 @@ The server creates an SQLite database with a user for logging in:
 
 "email: admin@example" and "password: password123".
 
-The bookings table also has a dummy record along with available cars data. This will allow the application to at least have some data to view. The backend server will run on PORT 3500.
+
+The bookings table also has a dummy record along with data for 3 cars. This will allow the application to at least have some data to view. The backend server will run on PORT 3500.
 
 ### The frontend
 
-Go into client diretory
+Go into client directory
 
 ```
 cd client
 ```
 
-Install dependancies
+Install dependencies
 
 ```
 npm install
@@ -86,11 +89,16 @@ ng serve
 
 Go to localhost:5000
 
-## Workflow Example
+## Application Description
 
 The user is able to view car that are available to a test drive , They are also able to book a
 test drive after login or registration. The user is able to fill out a form with their details. The form
 will check for correct South African ID input and other validation. Once the submission is made an email
 is sent as booking confirmation. The user is then taken to the bookings table where they will see their
-bookings. They are also able to update the bookings whereby another email will be sent to notify of update.
+bookings. They are also able to update the bookings whereby another email will be sent to notify of update. The user may also delete a booking as well.
+
+#### \*NB the form checks for a valid South African ID, no API calls are just a script to check validity, the following IDs may be used to test INVALID: 8001015009287 and VALID: 8001015009087
+
+Below is a basic workflow representation of the application.
+
 ![Workflow.](workflow.png)
